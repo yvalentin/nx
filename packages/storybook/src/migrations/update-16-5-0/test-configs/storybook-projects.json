@@ -137,7 +137,6 @@
           ],
           "styles": ["apps/webpack-app/src/styles.css"],
           "scripts": [],
-          "isolatedConfig": true,
           "webpackConfig": "apps/webpack-app/webpack.config.js",
           "fileReplacements": [
             {

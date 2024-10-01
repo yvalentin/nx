@@ -526,7 +526,6 @@
           "assets": ["apps/rw1/src/favicon.ico", "apps/rw1/src/assets"],
           "styles": ["apps/rw1/src/styles.css"],
           "scripts": [],
-          "isolatedConfig": true,
           "webpackConfig": "apps/rw1/webpack.config.js"
         },
         "configurations": {

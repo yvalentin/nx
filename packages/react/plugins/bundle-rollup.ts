@@ -1,6 +1,6 @@
 import * as rollup from 'rollup';
 
-// TODO(v20): This should be deprecated and removed in v22.
+// TODO(v21): This should be deprecated and removed in v22.
 function getRollupOptions(options: rollup.RollupOptions) {
   const extraGlobals = {
     react: 'React',

@@ -19,7 +19,7 @@ export default async function (tree: Tree) {
 
     const projectConfiguration = readProjectConfiguration(tree, projectName);
 
-    if (!options.webpackConfig && options.isolatedConfig !== false) {
+    if (!options.webpackConfig) {
       options.webpackConfig = `${projectConfiguration.root}/webpack.config.js`;
       tree.write(
         options.webpackConfig,

@@ -105,10 +105,6 @@
       "nx-core-build-project-json-nodes",
       "apps/cart/project.json"
     ],
-    "targets.build.options.isolatedConfig": [
-      "nx-core-build-project-json-nodes",
-      "apps/cart/project.json"
-    ],
     "targets.build.configurations.production": [
       "nx-core-build-project-json-nodes",
       "apps/cart/project.json"

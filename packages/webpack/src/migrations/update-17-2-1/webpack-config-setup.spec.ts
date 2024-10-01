@@ -66,24 +66,4 @@ module.exports = composePlugins(withNx(), (config) => {
       '/* CUSTOM */'
     );
   });
-
-  it('should not create webpack.config.js when isolatedConfig is set to false', async () => {
-    addProjectConfiguration(tree, 'myapp', {
-      root: 'apps/myapp',
-      targets: {
-        build: {
-          executor: '@nrwl/webpack:webpack',
-          options: {
-            // Technically this is not possible, since isolatedConfig without webpackConfig does not work
-            // Handling this edge-case anyway
-            isolatedConfig: false,
-          },
-        },
-      },
-    });
-
-    await webpackConfigSetup(tree);
-
-    expect(tree.exists('apps/myapp/webpack.config.js')).toBeFalsy();
-  });
 });

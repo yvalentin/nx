@@ -1,4 +1,5 @@
 import { existsSync } from 'fs';
+import { bold } from 'chalk';
 import { PackageJson } from '../../utils/package-json';
 import { prerelease } from 'semver';
 import { output } from '../../utils/output';
@@ -36,33 +37,67 @@ export interface InitArgs {
   integrated?: boolean; // For Angular projects only
 }
 
+export function runPackageManagerInstallPlugins(
+  repoRoot: string,
+  pmc: PackageManagerCommands,
+  plugins: string[]
+) {
+  if (plugins.length === 0) {
+    return;
+  }
+  addDepsToPackageJson(repoRoot, plugins);
+  runInstall(repoRoot, pmc);
+}
+
 export function installPlugins(
   repoRoot: string,
   plugins: string[],
   pmc: PackageManagerCommands,
   updatePackageScripts: boolean
-) {
+): {
+  succeededPlugins: string[];
+  failedPlugins: string[];
+} {
   if (plugins.length === 0) {
     return;
   }
 
-  addDepsToPackageJson(repoRoot, plugins);
-
-  runInstall(repoRoot, pmc);
-
   output.log({ title: '🔨 Configuring plugins' });
+  const succeededPlugins = [];
+  const failedPlugins = [];
   for (const plugin of plugins) {
-    execSync(
-      `${pmc.exec} nx g ${plugin}:init --keepExistingVersions ${
-        updatePackageScripts ? '--updatePackageScripts' : ''
-      }`,
-      {
+    const command = `${pmc.exec} nx g ${plugin}:init --keepExistingVersions ${
+      updatePackageScripts ? '--updatePackageScripts' : ''
+    }`;
+    try {
+      execSync(command, {
         stdio: [0, 1, 2],
         cwd: repoRoot,
         windowsHide: false,
-      }
-    );
+      });
+      succeededPlugins.push(plugin);
+    } catch (e) {
+      failedPlugins.push(plugin);
+      output.error({
+        title: `Install plugin ${plugin} failed: ${
+          e.message || 'Unknown error'
+        }`,
+        bodyLines: [
+          `Installed ${plugin} but failed to run:`,
+          bold(command),
+          `Please fix error and rerun the command:`,
+          e.stack,
+        ].filter(Boolean),
+      });
+    }
   }
+  if (succeededPlugins.length > 0) {
+    output.success({
+      title: 'Installed Plugins',
+      bodyLines: succeededPlugins.map((p) => `- ${p}`),
+    });
+  }
+  return { succeededPlugins, failedPlugins };
 }
 
 export async function initHandler(options: InitArgs): Promise<void> {
@@ -146,6 +181,7 @@ export async function initHandler(options: InitArgs): Promise<void> {
 
   output.log({ title: '📦 Installing Nx' });
 
+  runPackageManagerInstallPlugins(repoRoot, pmc, plugins);
   installPlugins(repoRoot, plugins, pmc, updatePackageScripts);
 
   if (useNxCloud) {

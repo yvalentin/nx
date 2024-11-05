@@ -21,7 +21,6 @@ import {
   Tree,
   updateNxJson,
 } from '@nx/devkit';
-
 import reactInitGenerator from '../init/init';
 import { Linter, lintProjectGenerator } from '@nx/eslint';
 import {
@@ -115,8 +114,6 @@ export async function applicationGeneratorInternal(
   host: Tree,
   schema: Schema
 ): Promise<GeneratorCallback> {
-  assertNotUsingTsSolutionSetup(host, 'react', 'application');
-
   const tasks = [];
 
   const options = await normalizeOptions(host, schema);
@@ -126,6 +123,9 @@ export async function applicationGeneratorInternal(
     ...schema,
     tsConfigName: schema.rootProject ? 'tsconfig.json' : 'tsconfig.base.json',
     skipFormat: true,
+    addTsPlugin:
+      process.env.NX_ADD_PLUGINS !== 'false' &&
+      process.env.NX_ADD_TS_PLUGIN !== 'false',
   });
   tasks.push(jsInitTask);
 
@@ -203,6 +203,7 @@ export async function applicationGeneratorInternal(
       compiler: options.compiler,
       skipFormat: true,
       addPlugin: options.addPlugin,
+      projectType: 'application',
     });
     tasks.push(viteTask);
     createOrEditViteConfig(

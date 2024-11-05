@@ -25,7 +25,7 @@ import {
   vitestCoverageV8Version,
 } from '../../utils/versions';
 
-import { addTsLibDependencies, initGenerator as jsInitGenerator } from '@nx/js';
+import { initGenerator as jsInitGenerator } from '@nx/js';
 import { join } from 'path';
 import { ensureDependencies } from '../../utils/ensure-dependencies';
 
@@ -52,7 +52,11 @@ export async function vitestGeneratorInternal(
 
   const tasks: GeneratorCallback[] = [];
 
-  const { root, projectType } = readProjectConfiguration(tree, schema.project);
+  const { root, projectType: _projectType } = readProjectConfiguration(
+    tree,
+    schema.project
+  );
+  const projectType = schema.projectType ?? _projectType;
   const isRootProject = root === '.';
 
   tasks.push(await jsInitGenerator(tree, { ...schema, skipFormat: true }));

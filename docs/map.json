@@ -1963,6 +1963,11 @@
                   "id": "ci-deployment",
                   "tags": ["docker", "deploy"],
                   "file": "shared/recipes/ci-deployment"
+                },
+                {
+                  "name": "Troubleshoot CI Pipeline Execution with Affected Project Graph",
+                  "id": "cipe-affected-project-graph",
+                  "file": "nx-cloud/recipes/cipe-affected-project-graph"
                 }
               ]
             }

@@ -317,6 +317,7 @@
     - [Other](/ci/recipes/other)
       - [Record Non-Nx Commands](/ci/recipes/other/record-commands)
       - [Prepare applications for deployment via CI](/ci/recipes/other/ci-deployment)
+      - [Troubleshoot CI Pipeline Execution with Affected Project Graph](/ci/recipes/other/cipe-affected-project-graph)
   - [Reference](/ci/reference)
     - [Configuration Options](/ci/reference/config)
     - [nx-cloud CLI](/ci/reference/nx-cloud-cli)

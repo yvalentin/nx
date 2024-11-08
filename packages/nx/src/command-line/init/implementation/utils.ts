@@ -66,6 +66,15 @@ export function createNxJsonFile(
 
 function deduceDefaultBase() {
   try {
+    execSync(`git --version`, {
+      stdio: ['ignore', 'ignore', 'ignore'],
+      windowsHide: false,
+    });
+  } catch {
+    // if git is not installed, we can't deduce the default base, so we return 'main'
+    return 'main';
+  }
+  try {
     execSync(`git rev-parse --verify main`, {
       stdio: ['ignore', 'ignore', 'ignore'],
       windowsHide: false,

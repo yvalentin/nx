@@ -6753,6 +6753,14 @@
             "disableCollapsible": false
           },
           {
+            "name": "Assignment Rules",
+            "path": "/ci/reference/assignment-rules",
+            "id": "assignment-rules",
+            "isExternal": false,
+            "children": [],
+            "disableCollapsible": false
+          },
+          {
             "name": "Custom Steps",
             "path": "/ci/reference/custom-steps",
             "id": "custom-steps",
@@ -6799,6 +6807,14 @@
         "name": "Launch Templates",
         "path": "/ci/reference/launch-templates",
         "id": "launch-templates",
+        "isExternal": false,
+        "children": [],
+        "disableCollapsible": false
+      },
+      {
+        "name": "Assignment Rules",
+        "path": "/ci/reference/assignment-rules",
+        "id": "assignment-rules",
         "isExternal": false,
         "children": [],
         "disableCollapsible": false
